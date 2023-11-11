@@ -13,10 +13,14 @@ export class CustomScene {
     const canvas = document.querySelector('canvas#scene') as HTMLCanvasElement
     CustomScene.renderer = new THREE.WebGLRenderer({canvas})
     CustomScene.renderer.setSize(window.innerWidth, window.innerHeight)
-    CustomScene.camera.position.set(0, 10, 0)
-    const floor = Walls.createAWall(0xadadad, 4, 3, 0, 4, .04, 5, CustomScene.scene)
+    CustomScene.camera.position.set(0, 1, 5)
+    const floor = Walls.createAWall(0x434343, 0, -.1, 0, 4, .04, 5, CustomScene.scene)
+    const ceiling = Walls.createAWall(0xadadad, 0, 2.1, 0, 4, .04, 5, CustomScene.scene)
+    const leftWall = Walls.createAWall(0xadadad, -2.5, 1, 0, .04, 2, 5, CustomScene.scene)
+    const rightWall = Walls.createAWall(0xadadad, 2.5, 1, 0, .04, 2, 5, CustomScene.scene)
+    const backWall = Walls.createAWall(0xadadad, 0, 1, -2.5, 4, 2, .04, CustomScene.scene)
+    const frontWall = Walls.createAWall(0xadadad, 0, 1, 2.5, 4, 2, .04, CustomScene.scene)
     //point camera at floor
-    CustomScene.camera.lookAt(floor.position)
     FreeCamera.createControls(CustomScene.camera, CustomScene.renderer)
     FreeCamera.addEventListeners(CustomScene.camera)
     CustomScene.scene.add(new THREE.AxesHelper)

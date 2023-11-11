@@ -35,25 +35,41 @@ export class FreeCamera {
   static addEventListeners(camera: THREE.Camera) {
     window.addEventListener('keydown', event => {
       console.log(event.keyCode)
+      const angle = camera.rotation.y;
       switch (event.keyCode) {
         case 37: // left
-          camera.position.x -= 1;
+          camera.position.z += Math.sin(angle);
+          camera.position.x -= Math.cos(angle);
           break;
         case 38: // up
-          camera.position.z -= 1;
+          //Must dynamically calculate the angle of the camera to move it forward
+          camera.position.z -= Math.cos(angle);
+          camera.position.x -= Math.sin(angle);
           break;
         case 39: // right
-          camera.position.x += 1;
+          camera.position.z -= Math.sin(angle);
+          camera.position.x += Math.cos(angle);
           break;
         case 40: // down
-          camera.position.z += 1;
+          camera.position.z += Math.cos(angle);
+          camera.position.x += Math.sin(angle);
           break;
       }
+      camera.lookAt(0, 0, 0);
     });
     if (FreeCamera.isMouseDown()) {
       window.addEventListener('mousemove', event => {
         camera.position.x = event.clientX;
         camera.position.z = event.clientY;
+        camera.position.y = 1
+        if (camera.position.y < 1) {
+          camera.position.y = 1;
+        } else {
+          camera.position.y = event.clientY;
+        }
+
+
+        camera.lookAt(0, 0, 0);
       })
     }
   }
